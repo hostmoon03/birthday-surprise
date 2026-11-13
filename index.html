@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Surprise 💙</title>
+<style>
+  :root { --navy:#071b3a; --navy2:#102d59; --white:#fff; --pale:#eaf2ff; }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; min-height:100vh; display:grid; place-items:center; padding:22px;
+    font-family: Georgia, "Times New Roman", serif; color:var(--white);
+    background:
+      radial-gradient(ellipse at 15% 12%, rgba(190,216,255,.30), transparent 34%),
+      radial-gradient(ellipse at 88% 82%, rgba(119,164,226,.24), transparent 36%),
+      linear-gradient(145deg, #dceaff 0%, #8eadd8 28%, #244675 62%, #071b3a 100%);
+    overflow-x:hidden;
+  }
+  .sparkles { position:fixed; inset:0; pointer-events:none; opacity:.55;
+    background-image: radial-gradient(#fff 1px, transparent 1px);
+    background-size:46px 46px; mask-image:linear-gradient(to bottom,black,transparent); }
+  .card {
+    width:min(100%,490px); min-height:490px; padding:34px 25px; text-align:center;
+    border:1px solid rgba(255,255,255,.28); border-radius:28px;
+    background:rgba(248,252,255,.16); backdrop-filter:blur(16px);
+    box-shadow:0 24px 70px rgba(0,0,0,.28); position:relative; z-index:1;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  h1 { font-size:clamp(2rem,8vw,2.8rem); margin:8px 0 12px; }
+  p { line-height:1.65; color:#e8efff; }
+  .sub { letter-spacing:2px; text-transform:uppercase; font: .72rem Arial,sans-serif; color:#c7d9f7; }
+  input {
+    width:min(100%,260px); padding:14px 16px; border-radius:12px; border:1px solid #cbd9ee;
+    text-align:center; font-size:1.1rem; letter-spacing:5px; outline:none; margin:12px 0;
+  }
+  button, .upload-label {
+    border:0; border-radius:999px; padding:13px 24px; margin:8px 5px;
+    background:var(--white); color:var(--navy); font-weight:bold; font-size:1rem;
+    cursor:pointer; transition:transform .2s, box-shadow .2s;
+    box-shadow:0 8px 22px rgba(0,0,0,.18);
+  }
+  button:hover, .upload-label:hover { transform:translateY(-3px); box-shadow:0 12px 26px rgba(0,0,0,.25); }
+  .error { color:#ffd3d3; min-height:24px; font: .9rem Arial,sans-serif; }
+  .big-heart { font-size:112px; cursor:pointer; filter:drop-shadow(0 8px 16px #0005); animation:pulse 1.4s infinite; }
+  @keyframes pulse { 50% { transform:scale(1.12); } }
+  .choices { display:flex; gap:22px; justify-content:center; flex-wrap:wrap; margin-top:22px; }
+  .choice {
+    width:145px; min-height:150px; padding:18px 10px; border-radius:20px;
+    background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.25);
+    cursor:pointer; transition:transform .2s;
+  }
+  .choice:hover { transform:translateY(-5px); }
+  .choice .emoji { display:block; font-size:62px; }
+  .choice span:last-child { display:block; margin-top:8px; font: .9rem Arial,sans-serif; }
+  .letter {
+    color:#10284b; background:linear-gradient(160deg,#ffffff 0%,#f1f7ff 100%); border:1px solid #d6e5fa; border-radius:12px; padding:25px 22px;
+    max-width:360px; box-shadow:0 12px 30px #0004; transform:rotate(-1deg);
+    animation:open .55s ease-out;
+  }
+  .letter p { color:#243b5c; }
+  @keyframes open { from { opacity:0; transform:translateY(18px) scale(.92) rotate(-1deg); } to { opacity:1; transform:translateY(0) scale(1) rotate(-1deg); } }
+  .photo-frame {
+    width:min(100%,320px); min-height:210px; padding:12px; border-radius:18px;
+    background:#fff; color:var(--navy); box-shadow:0 12px 30px #0004;
+  }
+  .photo-frame img { display:none; width:100%; max-height:330px; object-fit:contain; border-radius:10px; }
+  .photo-placeholder { min-height:180px; display:grid; place-items:center; color:#536985; font: .95rem Arial,sans-serif; }
+  input[type=file] { display:none; }
+  .memory-gallery { width:100%; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:16px; }
+  .memory-slot { min-height:115px; border:1px dashed #ffffff88; border-radius:14px; background:rgba(255,255,255,.10); display:grid; place-items:center; overflow:hidden; color:#dce9ff; font: .85rem Arial,sans-serif; }
+  .memory-slot img { width:100%; height:135px; object-fit:cover; display:block; }
+  .hidden { display:none !important; }
+  .back { background:transparent; color:white; border:1px solid #ffffff88; box-shadow:none; }
+  .tiny { font: .78rem Arial,sans-serif; color:#c7d9f7; margin-top:18px; }
+  .confetti { font-size:25px; letter-spacing:8px; }
+  .couple-stickers { display:flex; align-items:center; justify-content:center; gap:18px; margin:18px 0 4px; }
+  .sticker { display:inline-block; font-size:42px; filter:drop-shadow(0 3px 5px #0003); animation:stickerFloat 2.4s ease-in-out infinite; }
+  .sticker:nth-child(3) { animation-delay:.35s; }
+  .sticker-heart { font-size:24px; animation:pulse 1.4s infinite; }
+  @keyframes stickerFloat { 50% { transform:translateY(-5px) rotate(4deg); } }
+</style>
+</head>
+<body>
+<div class="sparkles"></div>
+<main class="card">
+  <section id="passwordPage">
+    <div class="confetti">✦ ✧ ✦</div>
+    <div style="font-size:58px">🔐</div>
+    <div class="sub">A little surprise is waiting</div>
+    <h1>Welcome 💙</h1>
+    <p>Enter the secret password to unlock your birthday surprise.</p>
+    <input id="password" type="password" inputmode="numeric" maxlength="8" placeholder="••••" aria-label="Password">
+    <div><button onclick="unlock()">Unlock ✨</button></div>
+    <div id="error" class="error"></div>
+  </section>
+
+  <section id="heartPage" class="hidden">
+    <div class="sub">Just for you</div>
+    <h1>Happy Anniversary ❤️</h1>
+    <p>Our love, our memories, our forever. 💙</p>
+    <div class="big-heart" role="button" tabindex="0" onclick="showChoices()" onkeydown="if(event.key==='Enter'||event.key===' '){showChoices()}">❤️</div>
+    <p class="tiny">Tap the heart to continue</p>
+  </section>
+
+  <section id="choicesPage" class="hidden">
+    <div class="sub">Choose your surprise</div>
+    <h1>Two little gifts 💙</h1>
+    <p>Open whichever one you like.</p>
+    <div class="choices">
+      <div class="choice" role="button" tabindex="0" onclick="showLetter()" onkeydown="if(event.key==='Enter'){showLetter()}">
+        <span class="emoji">💌</span><span>Open Letter</span>
+      </div>
+      <div class="choice" role="button" tabindex="0" onclick="showGift()" onkeydown="if(event.key==='Enter'){showGift()}">
+        <span class="emoji">🎁</span><span>Open Gift</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="letterPage" class="hidden">
+    <div class="sub">A message from the heart</div>
+    <h1>For you 💌</h1>
+    <div class="letter">
+      <p style="font-size:25px;margin:0">Happy Anniversary, My Love! ❤️</p>
+      <p>မင်းနဲ့တွေ့ဆုံခဲ့ရတဲ့နေ့ကစပြီး ကိုယ့်ဘဝထဲမှာ အမှတ်တရလှပတဲ့နေ့တွေ အများကြီး ပိုင်ဆိုင်လာခဲ့တယ်။</p>
+      <p>အမြဲတမ်း ပျော်ရွှင်စရာနေ့တွေပဲ ရှိနေမှာမဟုတ်ပေမဲ့ ဘယ်လိုအခြေအနေမျိုးပဲ ကြုံလာပါစေ မင်းလက်ကို မလွှတ်ဘဲ အတူတူဖြတ်သန်းသွားချင်တယ်။</p>
+      <p>တစ်ခါတလေ စိတ်ကောက်တာတွေ၊ စိတ်ဆိုးတာတွေ၊ နားလည်မှုလွဲတာတွေ ရှိနိုင်ပေမဲ့ မင်းကိုချစ်တဲ့စိတ်ကတော့ ဘယ်တော့မှ မပြောင်းလဲပါဘူး။</p>
+      <p>ကိုယ့်အတွက် မင်းဟာ ချစ်သူတစ်ယောက်သာမက ပျော်ရွှင်မှုတွေရဲ့ အကြောင်းရင်း၊ စိတ်အေးချမ်းရာလေးတစ်ခုလည်း ဖြစ်တယ်။</p>
+      <p>နောင်လာမယ့်နှစ်တွေမှာလည်း ဒီနေ့လို Anniversary တွေကို အတူတူဖြတ်သန်းရင်း အမှတ်တရအသစ်တွေ ဖန်တီးသွားချင်တယ်။</p>
+      <p>Thank you for being part of my life.</p>
+      <p><em>I don't need a perfect love story. I just want a lifetime with you.</em> ❤️</p>
+      <p style="text-align:right;margin-bottom:0">Forever Yours. ♾️</p>
+    </div>
+    <div class="couple-stickers" aria-label="Cute panda and pig stickers">
+      <span class="sticker">🐼</span>
+      <span class="sticker-heart">💕</span>
+      <span class="sticker">🐷</span>
+    </div>
+    <button class="back" onclick="goToChoices()">← Back</button>
+  </section>
+
+  <section id="giftPage" class="hidden">
+    <div class="sub">Our special moments</div>
+    <h1>Our Memories 📸</h1>
+    <p>Choose up to 10 photos to fill our little memory gallery. 💙</p>
+    <label class="upload-label" for="memoryPhotos">Choose up to 10 photos 📷</label>
+    <input id="memoryPhotos" type="file" accept="image/*" multiple>
+    <div id="memoryGallery" class="memory-gallery">
+      <div class="memory-slot">Photo 1 💕</div>
+      <div class="memory-slot">Photo 2 💕</div>
+      <div class="memory-slot">Photo 3 💕</div>
+      <div class="memory-slot">Photo 4 💕</div>
+      <div class="memory-slot">Photo 5 💕</div>
+      <div class="memory-slot">Photo 6 💕</div>
+      <div class="memory-slot">Photo 7 💕</div>
+      <div class="memory-slot">Photo 8 💕</div>
+      <div class="memory-slot">Photo 9 💕</div>
+      <div class="memory-slot">Photo 10 💕</div>
+    </div>
+    <p id="photoCount" class="tiny">0 / 10 photos selected</p>
+    <button class="back" onclick="goToChoices()">← Back</button>
+  </section>
+</main>
+<script>
+  const pages = ["passwordPage","heartPage","choicesPage","letterPage","giftPage"];
+  function showPage(id) {
+    pages.forEach(page => document.getElementById(page).classList.toggle("hidden", page !== id));
+  }
+  function unlock() {
+    const value = document.getElementById("password").value;
+    if (value === "1500") {
+      document.getElementById("error").textContent = "";
+      showPage("heartPage");
+    } else {
+      document.getElementById("error").textContent = "Incorrect password. Try again 💙";
+    }
+  }
+  document.getElementById("password").addEventListener("keydown", e => { if (e.key === "Enter") unlock(); });
+  function showChoices(){ showPage("choicesPage"); }
+  function showLetter(){ showPage("letterPage"); }
+  function showGift(){ showPage("giftPage"); }
+  function goToChoices(){ showPage("choicesPage"); }
+  document.getElementById("memoryPhotos").addEventListener("change", function(event) {
+    const files = Array.from(event.target.files || []).slice(0, 10);
+    const gallery = document.getElementById("memoryGallery");
+    gallery.innerHTML = "";
+    files.forEach((file, index) => {
+      if (!file.type.startsWith("image/")) return;
+      const slot = document.createElement("div");
+      slot.className = "memory-slot";
+      const img = document.createElement("img");
+      img.alt = "Memory photo " + (index + 1);
+      img.src = URL.createObjectURL(file);
+      slot.appendChild(img);
+      gallery.appendChild(slot);
+    });
+    document.getElementById("photoCount").textContent =
+      files.length + " / 10 photos selected";
+    for (let i = files.length; i < 10; i++) {
+      const slot = document.createElement("div");
+      slot.className = "memory-slot";
+      slot.textContent = "Photo " + (i + 1) + " 💕";
+      gallery.appendChild(slot);
+    }
+  });
+</script>
+</body>
+</html>
