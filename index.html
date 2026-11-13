@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Surprise 💙</title>
+<title>Happy Anniversary ❤️</title>
 <style>
   :root { --navy:#071b3a; --navy2:#102d59; --white:#fff; --pale:#eaf2ff; }
   * { box-sizing:border-box; }
@@ -88,7 +88,7 @@
     <div style="font-size:58px">🔐</div>
     <div class="sub">A little surprise is waiting</div>
     <h1>Welcome 💙</h1>
-    <p>Enter the secret password to unlock your birthday surprise.</p>
+    <p>Enter the secret password to unlock our anniversary surprise.</p>
     <input id="password" type="password" inputmode="numeric" maxlength="8" placeholder="••••" aria-label="Password">
     <div><button onclick="unlock()">Unlock ✨</button></div>
     <div id="error" class="error"></div>
@@ -141,22 +141,14 @@
   <section id="giftPage" class="hidden">
     <div class="sub">Our special moments</div>
     <h1>Our Memories 📸</h1>
-    <p>Choose up to 10 photos to fill our little memory gallery. 💙</p>
-    <label class="upload-label" for="memoryPhotos">Choose up to 10 photos 📷</label>
-    <input id="memoryPhotos" type="file" accept="image/*" multiple>
+    <p>Our favorite moments, kept together forever. 💙</p>
     <div id="memoryGallery" class="memory-gallery">
-      <div class="memory-slot">Photo 1 💕</div>
-      <div class="memory-slot">Photo 2 💕</div>
-      <div class="memory-slot">Photo 3 💕</div>
-      <div class="memory-slot">Photo 4 💕</div>
-      <div class="memory-slot">Photo 5 💕</div>
-      <div class="memory-slot">Photo 6 💕</div>
-      <div class="memory-slot">Photo 7 💕</div>
-      <div class="memory-slot">Photo 8 💕</div>
-      <div class="memory-slot">Photo 9 💕</div>
-      <div class="memory-slot">Photo 10 💕</div>
+      <div class="memory-slot"><img src="IMG_4301.jpeg" alt="Our memory 1"></div>
+      <div class="memory-slot"><img src="IMG_5941.jpeg" alt="Our memory 2"></div>
+      <div class="memory-slot"><img src="IMG_8900.jpeg" alt="Our memory 3"></div>
+      <div class="memory-slot"><img src="IMG_8901.jpeg" alt="Our memory 4"></div>
+      <div class="memory-slot"><img src="IMG_8902.jpeg" alt="Our memory 5"></div>
     </div>
-    <p id="photoCount" class="tiny">0 / 10 photos selected</p>
     <button class="back" onclick="goToChoices()">← Back</button>
   </section>
 </main>
@@ -167,7 +159,7 @@
   }
   function unlock() {
     const value = document.getElementById("password").value;
-    if (value === "1500") {
+    if (value === "2024") {
       document.getElementById("error").textContent = "";
       showPage("heartPage");
     } else {
@@ -179,29 +171,6 @@
   function showLetter(){ showPage("letterPage"); }
   function showGift(){ showPage("giftPage"); }
   function goToChoices(){ showPage("choicesPage"); }
-  document.getElementById("memoryPhotos").addEventListener("change", function(event) {
-    const files = Array.from(event.target.files || []).slice(0, 10);
-    const gallery = document.getElementById("memoryGallery");
-    gallery.innerHTML = "";
-    files.forEach((file, index) => {
-      if (!file.type.startsWith("image/")) return;
-      const slot = document.createElement("div");
-      slot.className = "memory-slot";
-      const img = document.createElement("img");
-      img.alt = "Memory photo " + (index + 1);
-      img.src = URL.createObjectURL(file);
-      slot.appendChild(img);
-      gallery.appendChild(slot);
-    });
-    document.getElementById("photoCount").textContent =
-      files.length + " / 10 photos selected";
-    for (let i = files.length; i < 10; i++) {
-      const slot = document.createElement("div");
-      slot.className = "memory-slot";
-      slot.textContent = "Photo " + (i + 1) + " 💕";
-      gallery.appendChild(slot);
-    }
-  });
 </script>
 </body>
 </html>
